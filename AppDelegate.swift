@@ -1,9 +1,9 @@
 //
 //  AppDelegate.swift
-//  DinhLuong
+//  Square
 //
-//  Created by Admin on 02/10/2018.
-//  Copyright © 2018 Techsmarter. All rights reserved.
+//  Created by Admin on 09/10/2018.
+//  Copyright © 2018 luong. All rights reserved.
 //
 
 import UIKit

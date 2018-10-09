@@ -1,66 +1,95 @@
 //
 //  ViewController.swift
-//  DinhLuong
+//  Square
 //
-//  Created by Admin on 02/10/2018.
-//  Copyright © 2018 Techsmarter. All rights reserved.
+//  Created by Admin on 09/10/2018.
+//  Copyright © 2018 luong. All rights reserved.
 //
 
 import UIKit
 
 class ViewController: UIViewController {
     
-    
-    @IBOutlet weak var usernameTextfield: UITextField!
-    
-    @IBOutlet weak var passwordTextfield: UITextField!
-    
-    
-    @IBOutlet weak var loginButton: UIButton!
-    
-    let database: Dictionary<String, String> = ["username":"DinhLuong", "password":"123456"]
-    
-    
+    var x1 = 100
+    var y1 = 300
+    let distance = 10
+    var rect = CGRect(x: 100, y: 300, width: 20, height: 20)
+    var childview : UIView?
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        loginButton.addTarget(self, action: #selector(self.clickLoginButton), for: .touchUpInside)
+        // Do any additional setup after loading the view, typically from a nib.
+        childview = UIView(frame: rect)
+        childview!.backgroundColor = UIColor.red
+        self.view.backgroundColor = UIColor.yellow
+        self.view.addSubview(childview!)
     }
-    @objc func clickLoginButton(){
-        let userName = usernameTextfield.text
-        let password = passwordTextfield.text
+    func Moving(x1: Int, y1: Int, width: Int, height: Int)
+    {
+        if (x1 < height) && (y1 < width) && (x1 > 0) && (y1 > 0){
+        childview?.removeFromSuperview()
+            rect = CGRect(x: x1, y: y1, width: 20, height: 20)
+            childview = UIView(frame: rect)
+            childview!.backgroundColor = UIColor.red
+            self.view.addSubview(childview!)
+        }
+    }
+    
+    
+    @IBAction func downAction(_ sender: Any) {
+        let view = self.view.frame.size
         
-        let localUsername = database["username"]
-        let localPassword = database["password"]
+          if y1 + distance < Int(view.height) - 20 {
         
-        if userName!.isEmpty  || password!.isEmpty {
-            let alertMessage = "All fields are requỉed."
-            let alertController = UIAlertController(title:"Invalid", message: alertMessage, preferredStyle: UIAlertController.Style.alert)
-            alertController.addAction(UIAlertAction(title:"OK", style: UIAlertAction.Style.default, handler: nil))
-            self.present(alertController, animated: true, completion: nil)
-            return
+            if y1 + distance < Int(view.height) {
+                y1 = y1 + distance
+            }
+            else {
+                y1 = y1 + 1
             
         }
-        guard userName == localUsername else {
-            
-            let alertMessage = "Login is unsucessful."
-            let alertController = UIAlertController(title:"Invalid Username", message: alertMessage, preferredStyle: UIAlertController.Style.alert)
-            alertController.addAction(UIAlertAction(title:"OK", style: UIAlertAction.Style.default, handler: nil))
-            self.present(alertController, animated: true, completion: nil)
-            
-            return
+        Moving(x1: x1, y1: y1, width: Int(view.width), height: Int(view.height))
         }
-        guard password == localPassword else {
-            
-            
-            
-            let alertMessage = "Login is unsucessful."
-            let alertController = UIAlertController(title:"Invalid Password", message: alertMessage, preferredStyle: UIAlertController.Style.alert)
-            alertController.addAction(UIAlertAction(title:"OK", style: UIAlertAction.Style.default, handler: nil))
-            self.present(alertController, animated: true, completion: nil)
-            
-            return
+    }
+    
+    @IBAction func rightAction(_ sender: Any) {
+        let view = self.view.frame.size
+        
+        if x1 < Int(view.width) - 24 {
+            if x1 + distance < Int(view.width) {
+                x1 = x1 + distance}
+            else{
+                x1 = x1 + 1}
         }
-         self.performSegue(withIdentifier: "showMain", sender: self)
+        Moving(x1: x1, y1: y1, width: Int(view.width), height: Int(view.height))
+        
+    }
+    
+    @IBAction func leftAction(_ sender: Any) {
+        let view  = self.view.frame.size
+        if x1 > 0 {
+            if x1 - distance > 0 {
+                x1 = x1 - distance}
+            else{
+                x1 = x1 - 1}
+        }
+        Moving(x1: x1, y1: y1, width: Int(view.width), height: Int(view.height))
+        
+    }
+    
+    @IBAction func topAction(_ sender: Any) {
+        let view = self.view.frame.size
+        if y1 > 30 {
+            if y1 - distance > 0 {
+                y1 = y1 - distance}
+            else{
+                y1 = y1 - 1}
+        }
+        
+        Moving(x1: x1, y1: y1, width: Int(view.width), height: Int(view.height))
+        
+    }
+    
 }
-}
+
 
